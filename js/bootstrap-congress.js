@@ -200,10 +200,8 @@
   , stylePhone: function (legislator) {
       return $('<td>').append(
           $('<a>')
-            .attr({
-                href: "tel:" + legislator.phone.split("-").join("")
-              , class: "visible-phone"
-            })
+            .attr({ href: "tel:" + legislator.phone.split("-").join("") })
+			.addClass("visible-phone")
             .append(
               $('<i>').addClass("icon-phone")
             )
