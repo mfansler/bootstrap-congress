@@ -36,12 +36,12 @@
         this.sunlightClient.legislators.allForZip(zipCode, allForZipCallback(this))
       } else {
 		this.clearResults()
-        this.displayAlert(this.alertInvalidZip)
+        this.displayAlert(this.alertInvalidZip())
 	  }
     }
     
-  , alertInvalidZip: 
-      $('<div>')
+  , alertInvalidZip: function () {
+      return $('<div>')
         .addClass('alert alert-block')
         .append(
           $('<a>')
@@ -54,9 +54,10 @@
           $('<p>')
             .text('Please input a valid ZIP code.')
         )
-    
-  , alertNoResults:
-      $('<div>')
+    }
+	
+  , alertNoResults: function () {
+      return $('<div>')
         .addClass('alert alert-error')
         .append(
           $('<a>')
@@ -69,9 +70,10 @@
         , $('<p>')
             .text('No results were found.')
         )
-  
-  , alertTooManyResults:
-      $('<div>')
+    }
+	
+  , alertTooManyResults: function () {
+      return $('<div>')
         .addClass('alert alert-info')
 		.append(
 		  $('<a>')
@@ -84,7 +86,8 @@
 		, $('<p>')
 		    .append("Unfortunately, ZIP codes don't perfectly match Congressional Districts, so you might see additional names listed.  It shouldn't be too hard to sort out, but if you do need help, you can always call the <strong>Congressional Switchboard at (202)224-3121</strong>.")
 		)
-    
+    }
+	
   , clearAlerts: function () {
       $(this.options.alert).empty()
     }
@@ -273,9 +276,9 @@
       
       if (legislators) {
 	    that.displayZipResults(legislators)
-		legislators.length > 3 && that.displayAlert(that.alertTooManyResults)
+		legislators.length > 3 && that.displayAlert(that.alertTooManyResults())
 	  }
-      else that.displayAlert(that.alertNoResults)
+      else that.displayAlert(that.alertNoResults())
     }
   }
 
