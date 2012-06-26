@@ -1,0 +1,9 @@
+[submodule "lib/jsonp-sunlightapi"]
+	path = lib/jsonp-sunlightapi
+	url = git://github.com/mfansler/jsonp-sunlightapi.git
+[submodule "lib/bootstrap"]
+	path = lib/bootstrap
+	url = git://github.com/twitter/bootstrap.git
+[submodule "lib/font-awesome"]
+	path = lib/font-awesome
+	url = git://github.com/FortAwesome/Font-Awesome.git

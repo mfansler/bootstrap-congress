@@ -6,17 +6,18 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="http://current.bootstrapcdn.com/bootstrap-v204/js/bootstrap.min.js"></script>
-<script src="http://current.bootstrapcdn.com/bootstrap-v204/js/bootstrap-transition.js"></script>
-<script src="http://current.bootstrapcdn.com/bootstrap-v204/js/bootstrap-button.js"></script>
-<script src="http://current.bootstrapcdn.com/bootstrap-v204/js/bootstrap-collapse.js"></script>
 
-<script src="../js/sunlight.js"></script>
+<script src="../lib/jsonp-sunlightapi/sunlight.js"></script>
 <script src="../js/bootstrap-congress.js"></script>
 
 <link href="http://current.bootstrapcdn.com/bootstrap-v204/css/bootstrap.min.css" rel="stylesheet" />
 <link href="http://current.bootstrapcdn.com/bootstrap-v204/css/bootstrap-responsive.min.css" rel="stylesheet" />
 
-<link href="css/font-awesome.css" rel="stylesheet" />
+<link href="../lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+<!--[if IE 7]>
+	<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome-ie7.css">
+<![endif]-->
 
 </head>
 
@@ -38,21 +39,21 @@
             </div>
         </div>
     </div>
-    
+    <hr>
     <div class="container">
     	<div class="row">
         	<div class="span4">
             	<h1>Contact Your Congressperson</h1>
-                <p>This example only shows</p>
-            </div>
-        	<div class="span8">
+                <p>This example explicitly lists the fields to be used.</p>
             	<form class="congress well" data-target="#myCongressTwo" data-sunlight-apikey="" data-alert="#myAlertsTwo">
                 	<input type="text default" class="input-medium search-query default zip-code">
                     <button type="submit" class="btn btn-info">Find</button>
                 </form>
                 <div id="myAlertsTwo"></div>
-                <div id="myCongressTwo" data-fields="name district contact fone"></div>
             </div>
+        	<div class="span8">
+                <div id="myCongressTwo" data-fields="name district contact fone"></div>
+			</div>
         </div>
     </div>
     
