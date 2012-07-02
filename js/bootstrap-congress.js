@@ -216,7 +216,7 @@
       
       legislator.facebook_id && $td.append(
           $('<a>').attr({
-            href: legislator.facebook_id
+            href: 'http://facebook.com/' + legislator.facebook_id
           , target: '_blank'
           })
           .append(
