@@ -1,5 +1,5 @@
 /* ============================================================
- * bootstrap-congress.js v1.0.0
+ * bootstrap-congress.js v0.1.1
  * ============================================================
  * Copyright 2012 Mervin Fansler
  *
@@ -23,23 +23,23 @@
   * ========================= */
   
   var Congress = function (element, options) {
-    this.$element = $(element);
-    this.options = $.extend({}, $.fn.congress.defaults, options);
-    this.sunlightClient = new SunlightClient(options.sunlightApikey);
+    this.$element = $(element)
+    this.options = $.extend({}, $.fn.congress.defaults, options)
+    this.sunlightClient = new SunlightClient(options.sunlightApikey)
   }
   
   Congress.prototype = {
     constructor: Congress
-    
+
   , allForZip: function (zipCode) {
-      if (zipCode && zipCode.match(/(^\d{5}$)/)) {
+      if (/(^\d{5}$)/.test(zipCode)) {
         this.sunlightClient.legislators.allForZip(zipCode, allForZipCallback(this))
       } else {
-		this.clearResults()
+        this.clearResults()
         this.displayAlert(this.alertInvalidZip())
-	  }
+      }
     }
-    
+  
   , alertInvalidZip: function () {
       return $('<div>')
         .addClass('alert alert-block')
@@ -47,15 +47,15 @@
           $('<a>')
             .addClass('close')
             .attr({'data-dismiss': 'alert',href: '#'})
-            .text('×'),
-          $('<h4>')
+            .text('×')
+        , $('<h4>')
             .addClass('alert-heading')
-            .text('Oops!'),
-          $('<p>')
+            .text('Oops!')
+        , $('<p>')
             .text('Please input a valid ZIP code.')
         )
     }
-	
+  
   , alertNoResults: function () {
       return $('<div>')
         .addClass('alert alert-error')
@@ -71,23 +71,28 @@
             .text('No results were found.')
         )
     }
-	
+  
   , alertTooManyResults: function () {
       return $('<div>')
         .addClass('alert alert-info')
-		.append(
-		  $('<a>')
-		    .addClass('close')
-		    .attr({'data-dismiss': 'alert',href: '#'})
-		    .text('×')
-		, $('<h4>')
-		    .addClass('alert-heading')
-		    .text('Why So Many Results?')
-		, $('<p>')
-		    .append("Unfortunately, ZIP codes don't perfectly match Congressional Districts, so you might see additional names listed.  It shouldn't be too hard to sort out, but if you do need help, you can always call the <strong>Congressional Switchboard at (202)224-3121</strong>.")
-		)
+        .append(
+          $('<a>')
+            .addClass('close')
+            .attr({'data-dismiss': 'alert',href: '#'})
+            .text('×')
+        , $('<h4>')
+            .addClass('alert-heading')
+            .text('Why So Many Results?')
+        , $('<p>')
+            .append(
+                "Unfortunately, ZIP codes don't perfectly match Congressional "
+              + "Districts, so you might see additional names listed.  It "
+              + "shouldn't be too hard to sort out, but if you do need help, "
+              + "you can always call the <strong>Congressional Switchboard at "
+              + "(202)224-3121</strong>.")
+        )
     }
-	
+  
   , clearAlerts: function () {
       $(this.options.alert).empty()
     }
@@ -175,17 +180,19 @@
     }
     
   , styleContact: function (legislator) {
-      return $([this.styleWebform(legislator)[0]
-             , this.styleTwitter(legislator)[0]
-             , this.styleFacebook(legislator)[0]
-             ])
+      return $(
+        [ this.styleWebform(legislator)[0]
+        , this.styleTwitter(legislator)[0]
+        , this.styleFacebook(legislator)[0]
+        ]
+      )
     }
     
   , styleDistrict: function (legislator) {
       return $('<td>').text(
           legislator.state
         + (legislator.chamber === 'house' ? '-' + legislator.district : '')
-        )
+      )
     }
     
   , styleName: function (legislator) {
@@ -201,29 +208,29 @@
       return $('<td>').append(
           $('<a>')
             .attr({ href: "tel:" + legislator.phone.split("-").join("") })
-			.addClass("visible-phone")
+            .addClass("visible-phone")
             .append(
               $('<i>').addClass("icon-phone")
             )
         , $('<p>')
             .addClass("hidden-phone")
             .text(legislator.phone)
-        )
+      )
     }
     
   , styleFacebook: function (legislator) {
       var $td = $('<td>')
       
       legislator.facebook_id && $td.append(
-          $('<a>').attr({
-            href: 'http://facebook.com/' + legislator.facebook_id
-          , target: '_blank'
-          })
-          .append(
-            $('<i>')
-            .addClass('icon-facebook')
-          )
+        $('<a>').attr({
+          href: 'http://facebook.com/' + legislator.facebook_id
+        , target: '_blank'
+        })
+        .append(
+          $('<i>')
+          .addClass('icon-facebook')
         )
+      )
       
       return $td
     }
@@ -232,15 +239,15 @@
       var $td = $('<td>')
       
       legislator.twitter_id && $td.append(
-          $('<a>').attr({
-            href: 'http://twitter.com/' + legislator.twitter_id
-          , target: '_blank'
-          })
-          .append(
-            $('<i>')
-            .addClass('icon-twitter')
-          )
+        $('<a>').attr({
+          href: 'http://twitter.com/' + legislator.twitter_id
+        , target: '_blank'
+        })
+        .append(
+          $('<i>')
+          .addClass('icon-twitter')
         )
+      )
       
       return $td
     }
@@ -249,15 +256,15 @@
       var $td = $('<td>')
       
       legislator.webform && $td.append(
-          $('<a>').attr({
-            href: legislator.webform
-          , target: '_blank'
-          })
-          .append(
-            $('<i>')
-            .addClass('icon-envelope-alt')
-          )
+        $('<a>').attr({
+          href: legislator.webform
+        , target: '_blank'
+        })
+        .append(
+          $('<i>')
+          .addClass('icon-envelope-alt')
         )
+      )
       
       return $td
     }
@@ -273,21 +280,21 @@
       var legislators = conformZipResult(data)
       
       if (legislators) {
-	    that.displayZipResults(legislators)
-		legislators.length > 3 && that.displayAlert(that.alertTooManyResults())
-	  }
-      else that.displayAlert(that.alertNoResults())
+        that.displayZipResults(legislators)
+        legislators.length > 3 && that.displayAlert(that.alertTooManyResults())
+      } else that.displayAlert(that.alertNoResults())
     }
   }
 
   function conformZipResult(data) {
     var results = ''
-    if (data && data.response && data.response.legislators && data.response.legislators.length > 0) {
-      results = jQuery.map(data.response.legislators
-      , function(n, i) {
-          return n.legislator
-        }
-      )
+    if (data && data.response && data.response.legislators
+      && data.response.legislators.length > 0) {
+        results = jQuery.map(data.response.legislators
+        , function(n, i) {
+            return n.legislator
+          }
+        )
     }
     
     return results
@@ -301,9 +308,14 @@
       
       var $this = $(this)
         , data = $this.data('congress')
-        , options = $.extend({}, $.fn.congress.defaults, $this.data(), typeof option == 'object' && option)
+        , options = $.extend({}, $.fn.congress.defaults, $this.data()
+            , typeof option == 'object' && option
+          )
       
-      if (typeof options.fields == 'string') options.fields = options.fields.split(' ')
+      if (typeof options.fields == 'string') {
+        options.fields = options.fields.split(' ')
+      }
+      
       if (!data) $this.data('congress', (data = new Congress(this, options)))
       
       if (typeof option == 'string') data[option]()
@@ -321,15 +333,17 @@
   * ================= */
 
   $(function () {
-    $('body').on('submit.congress.data-api', 'form.congress[data-sunlight-apikey]', function ( e ) {
-      var $this = $(this), href
-        , $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
-        , zipVal = $this.children('.zip-code').val()
-        , option = $.extend({}, $target.data(), $this.data(), {"zipCode": zipVal})
-      
-      e.preventDefault()
-      $target.congress(option)
-    })
+    $('body').on('submit.congress.data-api'
+      , 'form.congress[data-sunlight-apikey]'
+      , function ( e ) {
+          var $this = $(this), href
+            , $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
+            , zipVal = $this.children('.zip-code').val()
+            , option = $.extend({}, $target.data(), $this.data(), {"zipCode": zipVal})
+          
+          e.preventDefault()
+          $target.congress(option)
+        })
   })
   
 }(window.jQuery);
