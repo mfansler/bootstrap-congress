@@ -1,5 +1,5 @@
 /* ============================================================
- * bootstrap-congress.js v0.1.1
+ * bootstrap-congress.js v0.1.2
  * ============================================================
  * Copyright 2012 Mervin Fansler
  *
@@ -41,56 +41,30 @@
     }
   
   , alertInvalidZip: function () {
-      return $('<div>')
-        .addClass('alert alert-block')
-        .append(
-          $('<a>')
-            .addClass('close')
-            .attr({'data-dismiss': 'alert',href: '#'})
-            .text('×')
-        , $('<h4>')
-            .addClass('alert-heading')
-            .text('Oops!')
-        , $('<p>')
-            .text('Please input a valid ZIP code.')
-        )
+      return '<div class="alert alert-error">'
+        + '<a class="close" data-dismiss="alert" href="#">×</a>'
+        + '<h4 class="alert-heading">Oops!</h4>'
+        + '<p>Please input a valid ZIP code.</p>'
+        + '</div>'
     }
   
   , alertNoResults: function () {
-      return $('<div>')
-        .addClass('alert alert-error')
-        .append(
-          $('<a>')
-            .addClass('close')
-            .attr({'data-dismiss': 'alert',href: '#'})
-            .text('×')
-        , $('<h4>')
-            .addClass('alert-heading')
-            .text('Oops!')
-        , $('<p>')
-            .text('No results were found.')
-        )
+      return '<div class="alert alert-error">'
+        + '<a class="close" data-dismiss="alert" href="#">×</a>'
+        + '<h4 class="alert-heading">Oops!</h4>'
+        + '<p>No results were found.</p>'
+        + '</div>'
     }
   
   , alertTooManyResults: function () {
-      return $('<div>')
-        .addClass('alert alert-info')
-        .append(
-          $('<a>')
-            .addClass('close')
-            .attr({'data-dismiss': 'alert',href: '#'})
-            .text('×')
-        , $('<h4>')
-            .addClass('alert-heading')
-            .text('Why So Many Results?')
-        , $('<p>')
-            .append(
-                "Unfortunately, ZIP codes don't perfectly match Congressional "
-              + "Districts, so you might see additional names listed.  It "
-              + "shouldn't be too hard to sort out, but if you do need help, "
-              + "you can always call the <strong>Congressional Switchboard at "
-              + "(202)224-3121</strong>.")
-        )
+      return '<div class="alert alert-info">'
+        + '<a class="close" data-dismiss="alert" href="#">×</a>'
+        + '<h4 class="alert-heading">Why So Many Results?</h4>'
+        + '<p>Unfortunately, ZIP codes don\'t perfectly match Congressional '
+        + 'Districts, so you might see additional names listed.  It '
+        + 'shouldn\'t be too hard to sort out, but if you do need help, '
+        + 'you can always call the <strong>Congressional Switchboard at '
+        + '(202)224-3121</strong>.'
     }
   
   , clearAlerts: function () {
@@ -290,7 +264,7 @@
     var results = ''
     if (data && data.response && data.response.legislators
       && data.response.legislators.length > 0) {
-        results = jQuery.map(data.response.legislators
+        results = $.map(data.response.legislators
         , function(n, i) {
             return n.legislator
           }
