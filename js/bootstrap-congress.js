@@ -93,154 +93,132 @@
   * =============== */
 
   , styleZipResults: function (legislators) {
-      
       var $topRow = $('<tr>')
-        , $t = $('<table>')
-          .addClass('table table-striped')
+        , $t = $('<table class="table table-striped">')
           .append($('<thead>')
             .append($topRow)
           )
         , $tbody = $('<tbody>').appendTo($t)
         , that = this
-    
+      
       // Add Column Heading Text
       $.each(that.options.fields, function (i, field) {
-        var $th = $('<th>')
+        var heading = ''
         
         switch(field) {
           case "contact":
-            $th.text('Contact').attr({colspan: 3})
+            heading = '<th colspan="3">Contact</th>'
             break
           case "district":
-            $th.text('District')
+            heading = '<th>District</th>'
             break
           case "name":
-            $th.text('Name')
+            heading = '<th>Name</th>'
             break
           case "phone":
-            $th.text('Phone')
+            heading = '<th>Phone</th>'
             break
         }
         
-        $th.text() && $topRow.append($th)
+        heading && $topRow.append(heading)
       })
     
       // Add Rows
       $.each(legislators, function (i, legislator) {
-      
-        var $tr = $('<tr>')
-      
+        var tRow = '<tr>'
+        
         $.each(that.options.fields, function (k, field) {
           switch(field) {
             case "contact":
-              $tr.append(that.styleContact(legislator))
+              tRow += that.styleContact(legislator)
               break
             case "district":
-              $tr.append(that.styleDistrict(legislator))
+              tRow += that.styleDistrict(legislator)
               break
             case "name":
-              $tr.append(that.styleName(legislator))
+              tRow += that.styleName(legislator)
               break
             case "phone":
-              $tr.append(that.stylePhone(legislator))
+              tRow += that.stylePhone(legislator)
               break
           }
         })
-      
-        $tr.appendTo($tbody)
+        
+        $tbody.append(tRow + '</tr>')
       })
       
       return $t
     }
     
   , styleContact: function (legislator) {
-      return $(
-        [ this.styleWebform(legislator)[0]
-        , this.styleTwitter(legislator)[0]
-        , this.styleFacebook(legislator)[0]
-        ]
-      )
+      return this.styleWebform(legislator)
+        + this.styleTwitter(legislator)
+        + this.styleFacebook(legislator)
     }
     
   , styleDistrict: function (legislator) {
-      return $('<td>').text(
-          legislator.state
+      return '<td>'
+        + legislator.state
         + (legislator.chamber === 'house' ? '-' + legislator.district : '')
-      )
+        + '</td>'
     }
     
   , styleName: function (legislator) {
-      return $('<td>').text(
-        [ legislator.title
-        , legislator.firstname
-        , legislator.lastname
-        ].join(' ')
-      )
+      return '<td>'
+        + [ legislator.title
+          , legislator.firstname
+          , legislator.lastname
+          ].join(' ')
+        + '</td>'
     }
     
   , stylePhone: function (legislator) {
-      return $('<td>').append(
-          $('<a>')
-            .attr({ href: "tel:" + legislator.phone.split("-").join("") })
-            .addClass("visible-phone")
-            .append(
-              $('<i>').addClass("icon-phone")
-            )
-        , $('<p>')
-            .addClass("hidden-phone")
-            .text(legislator.phone)
-      )
+      return '<td>'
+        + '<a class="visible-phone" href="tel:'
+        + legislator.phone.split('-').join('')
+        + '"><i class="icon-phone"></i></a>'
+        + '<p class="hidden-phone">'
+        + legislator.phone
+        + '</p></td>'
     }
     
   , styleFacebook: function (legislator) {
-      var $td = $('<td>')
+      var fb = ''
       
-      legislator.facebook_id && $td.append(
-        $('<a>').attr({
-          href: 'http://facebook.com/' + legislator.facebook_id
-        , target: '_blank'
-        })
-        .append(
-          $('<i>')
-          .addClass('icon-facebook')
-        )
-      )
+      if (legislator.facebook_id) {
+        fb = '<a target="_blank" '
+          + 'href="http://facebook.com/'
+          + legislator.facebook_id
+          + '"><i class="icon-facebook"></i></a>'
+      }
       
-      return $td
+      return '<td>' + fb + '</td>'
     }
     
   , styleTwitter: function (legislator) {
-      var $td = $('<td>')
+      var tw = ''
       
-      legislator.twitter_id && $td.append(
-        $('<a>').attr({
-          href: 'http://twitter.com/' + legislator.twitter_id
-        , target: '_blank'
-        })
-        .append(
-          $('<i>')
-          .addClass('icon-twitter')
-        )
-      )
+      if (legislator.twitter_id) {
+        tw = '<a target="_blank" '
+          + 'href="http://twitter.com/'
+          + legislator.twitter_id
+          + '"><i class="icon-twitter"></i></a>'
+      }
       
-      return $td
+      return '<td>' + tw + '</td>'
     }
     
   , styleWebform: function (legislator) {
-      var $td = $('<td>')
+      var wf = ''
       
-      legislator.webform && $td.append(
-        $('<a>').attr({
-          href: legislator.webform
-        , target: '_blank'
-        })
-        .append(
-          $('<i>')
-          .addClass('icon-envelope-alt')
-        )
-      )
+      if (legislator.webform) {
+        wf = '<a target="_blank" '
+          + 'href="'
+          + legislator.webform
+          + '"><i class="icon-envelope-alt"></i></a>'
+      }
       
-      return $td
+      return '<td>' + wf + '</td>'
     }
     
   }
